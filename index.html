@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Question</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/blog-home.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var voprosOtvet = [];
+			var currentActiveQuestion = 0;
+            $("#button111").click(function(){                  
+            	
+                $("#sasha1").append($("<li>").append($("#sasha").val()+' '+'<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-question-sign"></span></button>'));
+                var i=0;
+                $("#sasha1 li").each(function(){
+                    $(this).attr("id", ++i);  
+                    });
+                var k=0;
+                $("#sasha1 button").each(function(){
+                    $(this).attr("id",++k);                    
+					
+                });
+                
+                var object = {name: $("#sasha").val(), id: k, value: []};
+                voprosOtvet.push(object);
+            
+                console.log(voprosOtvet);
+                $("#sasha").val('');
+                $("#dlyaOtveta").val('');
+
+            });
+               	
+            $("#sasha1").on("click", "button", function(){
+            	$("#dlyaOtveta").show();
+               	$("#button222").show();
+				currentActiveQuestion = $(this).attr("id");
+				var currentOtvetLength = voprosOtvet[currentActiveQuestion-1].value.length;
+				var $cont = $("#spOtv"),
+				    elems = voprosOtvet[currentActiveQuestion-1].value,
+				        i = 0,
+				        l = elems.length,
+				        showElem = function () {
+				            var $el = $("<li>"+elems[i-1]+"</li>");
+				            $el.appendTo($cont).hide().fadeIn(250);
+				            if (++i-1 <l) {
+				                setTimeout(showElem, 500);
+				            };
+				        };
+				showElem();
+
+
+          	    $("#sasha3 button").each(function(){
+                    $(this).attr("id","wwwqqq");  
+                $("#spOtv").empty();
+                });
+            });
+
+			$("#sasha3").on("click", "#wwwqqq", function(){
+               	$("#spOtv").append($("<li>").append($("#dlyaOtveta").val()));
+               	var arrayLength = voprosOtvet.length;
+            	var otvetLength = voprosOtvet[currentActiveQuestion-1].value.length;
+               	voprosOtvet[currentActiveQuestion-1].value[otvetLength]= $("#dlyaOtveta").val();
+               	console.log(voprosOtvet, voprosOtvet[currentActiveQuestion-1].value[otvetLength]);
+				$("#dlyaOtveta").val('');
+			});
+
+          var arrayElement = 0; 
+
+			$("#QuestionYes").on("click", function(){
+				
+				$("#sasha1 li").each(function(){
+                	var elementQuestion = $(this).attr("id");
+					var otvetElementLength = voprosOtvet[elementQuestion-1].value.length;
+                	if (otvetElementLength === 0) {
+                   		$(this).hide();
+                    	} else {
+                    		$(this).show();
+                    	};
+                    });
+				$("#spOtv").empty();
+			});
+
+
+
+			$("#QuestionNo").on("click", function(){
+				
+				$("#sasha1 li").each(function(){
+                	var elementQuestion = $(this).attr("id");
+					var otvetElementLength = voprosOtvet[elementQuestion-1].value.length;
+                	if (otvetElementLength === 0) {
+                   		$(this).show();
+                    	} else {
+                    		$(this).hide();
+                    	};
+                    });
+				$("#spOtv").empty();
+			});
+
+			$("#QuestionAll").on("click", function(){
+				
+				$("#sasha1 li").each(function(){
+                	$(this).show();
+                });
+                $("#spOtv").empty();
+			});
+			
+			$('#eeerrr').trigger( 'reset' );    
+
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Опросник</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a id="QuestionAll">Все вопросы</a>
+                    </li>
+                    <li>
+                        <a id="QuestionYes">Вопросы с ответами</a>
+                    </li>
+                    <li>
+                        <a id="QuestionNo">Вопросы без ответов</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Sidebar Widgets Column -->
+            <div class="col-md-6">
+
+                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <hr>
+                <h4>Вы можете поставить любой вопрос либо помочь с ответом посетитетям нашего сайта!</h4>
+                
+
+                <!-- Blog Search Well -->
+                <form id="eeerrr">
+                <div class="well">
+                    <h4>Введите свой вопрос</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="sasha" value="">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="button111">
+                                <span class="glyphicon glyphicon-question-sign"></span>
+                        </button>
+                        </span>
+                    </div>
+
+                    <!-- /.input-group -->
+                </div>
+                </form>
+
+                <div class="well">
+
+                    <h4>Список вопросов</h4>
+			    
+				    <div>
+			            <ol id="sasha1"></ol>
+			        </div>
+
+                   <!-- /.row -->
+	            </div>
+
+
+	            <!-- Blog Entries Column -->
+	            <div class="col-md-6" id="sasha3">
+	            	<div id="nazva"></div>
+	            	<div>
+	            		<ol id="spOtv"></ol>
+	            	</div>
+	                <textarea class="img-responsive" id="dlyaOtveta"></textarea>
+	                <div id="button222">
+	                	<button>Дави</button>
+	                </div>
+
+	            </div>
+
+			</div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="previous">
+                        <a href="#">&larr; Older</a>
+                    </li>
+                    <li class="next">
+                        <a href="#">Newer &rarr;</a>
+                    </li>
+                </ul>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+
+</body>
+
+</html>
